@@ -346,7 +346,7 @@ export default function generatePDF(data) {
           const imgWidth = 100;
           const imgHeight = 60;
           const x = hookData.cell.x + (hookData.cell.width / 2) - (imgWidth / 2);
-          const y = hookData.cell.y + 30;
+          const y = hookData.cell.y + 45; // Pushed down so it doesn't cover text
           doc.addImage(STAMP_BASE64, 'PNG', x, y, imgWidth, imgHeight);
         }
       }
