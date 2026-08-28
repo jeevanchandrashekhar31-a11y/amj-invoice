@@ -288,7 +288,31 @@ export default function generatePDF(data, isPreview = false) {
   finalY = doc.lastAutoTable.finalY;
 
   // -- 5. FOOTER DETAILS --
+
+  const taxRows = [];
+  if (isCgst) {
+    taxRows.push([
+      { content: 'CGST', styles: { fontStyle: 'bold', halign: 'center' } },
+      { content: data.totals.cgst.toFixed(0), styles: { halign: 'right' } }
+    ]);
+    taxRows.push([
+      { content: 'SGST', styles: { fontStyle: 'bold', halign: 'center' } },
+      { content: data.totals.sgst.toFixed(0), styles: { halign: 'right' } }
+    ]);
+  } else {
+    taxRows.push([
+      { content: 'IGST', styles: { fontStyle: 'bold', halign: 'center' } },
+      { content: (data.totals.igst || data.totals.gst).toFixed(0), styles: { halign: 'right' } }
+    ]);
+  }
   
+  if (data.applyTcs) {
+    taxRows.push([
+      { content: 'TCS', styles: { fontStyle: 'bold', halign: 'center' } },
+      { content: (data.totals.tcs || 0).toFixed(0), styles: { halign: 'right' } }
+    ]);
+  }
+
   autoTable(doc, {
     startY: finalY,
     theme: 'grid',
@@ -308,17 +332,11 @@ export default function generatePDF(data, isPreview = false) {
     },
     body: [
       [
-        { content: 'Total in words\n\n' + numberToWords(Math.round(data.totals.invoiceTotal)), colSpan: 2, rowSpan: 2 },
+        { content: 'Total in words\n\n' + numberToWords(Math.round(data.totals.invoiceTotal)), colSpan: 2, rowSpan: 1 + taxRows.length },
         { content: 'Taxable Amount', styles: { fontStyle: 'bold' } },
         { content: data.totals.totalTaxableValue.toFixed(0), styles: { halign: 'right' } }
       ],
-      isCgst ? [
-        { content: 'CGST\nSGST' + (data.applyTcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
-        { content: `${data.totals.cgst.toFixed(0)}\n${data.totals.sgst.toFixed(0)}` + (data.applyTcs ? `\n${(data.totals.tcs || 0).toFixed(0)}` : ''), styles: { halign: 'right' } }
-      ] : [
-        { content: 'IGST' + (data.applyTcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
-        { content: (data.totals.igst || data.totals.gst).toFixed(0) + (data.applyTcs ? `\n${(data.totals.tcs || 0).toFixed(0)}` : ''), styles: { halign: 'right' } }
-      ],
+      ...taxRows,
       [
         { content: 'Bank Details', colSpan: 2, styles: { fontStyle: 'bold' } },
         { content: 'Total Amount After Tax', styles: { fontStyle: 'bold', halign: 'center' } },
