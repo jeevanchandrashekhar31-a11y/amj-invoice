@@ -25,7 +25,7 @@ const numberToWords = (num) => {
   return str.trim();
 };
 
-export default function generatePDF(data) {
+export default function generatePDF(data, isPreview = false) {
   const doc = new jsPDF('p', 'pt', 'a4');
   const pageWidth = doc.internal.pageSize.getWidth();
   
@@ -353,5 +353,8 @@ export default function generatePDF(data) {
     }
   });
 
+  if (isPreview) {
+    return doc.output('datauristring');
+  }
   doc.save(`${data.invoiceNumber}.pdf`);
 }

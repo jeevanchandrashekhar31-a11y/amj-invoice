@@ -6,6 +6,8 @@ import './NewInvoice.css';
 
 export default function NewInvoice() {
   const [loading, setLoading] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [invoiceDate, setInvoiceDate] = useState(new Date().toISOString().split('T')[0]);
   const [dueDate, setDueDate] = useState('');
   
@@ -90,6 +92,34 @@ export default function NewInvoice() {
   };
 
   const totals = calculateTotals();
+
+  const handlePreview = () => {
+    setPreviewLoading(true);
+    try {
+      let nextNum = parseInt(localStorage.getItem('invoiceCounter') || INVOICE_SETTINGS.STARTING_NUMBER);
+      const invNumber = dispatch.docNoDate ? dispatch.docNoDate : generateInvoiceNumber(nextNum);
+      const invoiceData = {
+        id: new Date().getTime().toString(),
+        invoiceNumber: invNumber,
+        invoiceDate,
+        dueDate,
+        consignee,
+        buyer,
+        dispatch,
+        items,
+        totals,
+        taxType,
+        createdAt: new Date().toISOString()
+      };
+      const dataUri = generatePDF(invoiceData, true);
+      setPreviewUrl(dataUri);
+    } catch (error) {
+      console.error("Preview error: ", error);
+      alert("Failed to generate preview.");
+    } finally {
+      setPreviewLoading(false);
+    }
+  };
 
   const handleSaveAndPrint = async () => {
     setLoading(true);
@@ -271,8 +301,29 @@ export default function NewInvoice() {
           </div>
         </div>
 
-        <div className="actions-bar">
-          <button className="btn-primary flex-btn" onClick={handleSaveAndPrint} disabled={loading}>
+        {previewUrl && (
+          <div className="preview-section" style={{ marginTop: '30px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ margin: 0, color: '#0f172a' }}>Invoice Preview</h3>
+              <button className="btn-secondary" onClick={() => setPreviewUrl(null)} style={{ padding: '8px 16px', background: '#e2e8f0', color: '#334155' }}>
+                Close Preview
+              </button>
+            </div>
+            <iframe 
+              src={previewUrl} 
+              width="100%" 
+              height="700px" 
+              style={{ border: '1px solid #cbd5e1', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+              title="Invoice Preview"
+            />
+          </div>
+        )}
+
+        <div className="actions-bar" style={{ display: 'flex', gap: '15px', justifyContent: 'flex-end', marginTop: '30px' }}>
+          <button className="btn-secondary flex-btn" onClick={handlePreview} disabled={previewLoading} style={{ flex: 1, justifyContent: 'center' }}>
+            {previewLoading ? 'Generating...' : '👁️ Preview Invoice'}
+          </button>
+          <button className="btn-primary flex-btn" onClick={handleSaveAndPrint} disabled={loading} style={{ flex: 2, justifyContent: 'center' }}>
             {loading ? 'Saving...' : <><Save size={20} /> Save & Print Invoice</>}
           </button>
         </div>
