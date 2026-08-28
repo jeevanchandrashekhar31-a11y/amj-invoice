@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import generatePDF from '../utils/pdfGenerator';
-import { Printer } from 'lucide-react';
+import { Printer, Trash2 } from 'lucide-react';
 
 export default function Dashboard() {
   const [invoices, setInvoices] = useState([]);
@@ -28,6 +28,17 @@ export default function Dashboard() {
 
   const handleReprint = (invoiceData) => {
     generatePDF(invoiceData);
+  };
+
+  const handleDelete = (id) => {
+    if (!window.confirm("Are you sure you want to delete this invoice?")) return;
+    try {
+      const updatedInvoices = invoices.filter(inv => inv.id !== id);
+      setInvoices(updatedInvoices);
+      localStorage.setItem('invoices', JSON.stringify(updatedInvoices));
+    } catch (error) {
+      console.error("Error deleting invoice:", error);
+    }
   };
 
   return (
@@ -62,13 +73,22 @@ export default function Dashboard() {
                     <td>₹{inv.totals?.totalTaxableValue?.toFixed(2)}</td>
                     <td className="bold">₹{inv.totals?.invoiceTotal?.toFixed(2)}</td>
                     <td>
-                      <button 
-                        className="btn-secondary" 
-                        onClick={() => handleReprint(inv)}
-                        style={{padding: '6px 12px', fontSize: '0.85rem'}}
-                      >
-                        <Printer size={16} /> Reprint
-                      </button>
+                      <div style={{display: 'flex', gap: '10px'}}>
+                        <button 
+                          className="btn-secondary" 
+                          onClick={() => handleReprint(inv)}
+                          style={{padding: '6px 12px', fontSize: '0.85rem'}}
+                        >
+                          <Printer size={16} /> Reprint
+                        </button>
+                        <button 
+                          className="btn-icon text-danger" 
+                          onClick={() => handleDelete(inv.id)}
+                          title="Delete Invoice"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
