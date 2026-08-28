@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { BANK_DETAILS, TERMS_AND_CONDITIONS, LOGO_BASE64 } from '../config/constants';
+import { BANK_DETAILS, TERMS_AND_CONDITIONS, LOGO_BASE64, STAMP_BASE64 } from '../config/constants';
 
 // Helper to convert number to words (Indian Numbering System)
 const numberToWords = (num) => {
@@ -339,7 +339,18 @@ export default function generatePDF(data) {
       [
         { content: 'Terms and Conditions\n\n' + TERMS_AND_CONDITIONS[0] + '\n' + TERMS_AND_CONDITIONS[1], colSpan: 2 }
       ]
-    ]
+    ],
+    didDrawCell: (hookData) => {
+      if (hookData.section === 'body' && hookData.cell.text.join('\n').includes('For AMJ ENTERPRISES')) {
+        if (STAMP_BASE64) {
+          const imgWidth = 100;
+          const imgHeight = 60;
+          const x = hookData.cell.x + (hookData.cell.width / 2) - (imgWidth / 2);
+          const y = hookData.cell.y + 30;
+          doc.addImage(STAMP_BASE64, 'PNG', x, y, imgWidth, imgHeight);
+        }
+      }
+    }
   });
 
   doc.save(`${data.invoiceNumber}.pdf`);
