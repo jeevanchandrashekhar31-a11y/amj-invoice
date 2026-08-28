@@ -21,7 +21,8 @@ export default function NewInvoice() {
     through: 'By Road',
     docNoDate: '',
     destination: '',
-    ewayBillNo: ''
+    ewayBillNo: '',
+    dispatchFrom: ''
   });
 
   // Settings
@@ -210,6 +211,7 @@ export default function NewInvoice() {
             <input type="text" placeholder="Vehicle No." className="form-control" value={dispatch.vehicleNo} onChange={e => setDispatch({...dispatch, vehicleNo: e.target.value})} />
             <input type="text" placeholder="Dispatch Through" className="form-control" value={dispatch.through} onChange={e => setDispatch({...dispatch, through: e.target.value})} />
             <input type="text" placeholder="Doc No & Date" className="form-control" value={dispatch.docNoDate} onChange={e => setDispatch({...dispatch, docNoDate: e.target.value})} />
+            <input type="text" placeholder="Dispatch From" className="form-control" value={dispatch.dispatchFrom} onChange={e => setDispatch({...dispatch, dispatchFrom: e.target.value})} />
             <input type="text" placeholder="Destination" className="form-control" value={dispatch.destination} onChange={e => setDispatch({...dispatch, destination: e.target.value})} />
             <input type="text" placeholder="E-Way Bill No." className="form-control" value={dispatch.ewayBillNo} onChange={e => setDispatch({...dispatch, ewayBillNo: e.target.value})} />
           </div>
