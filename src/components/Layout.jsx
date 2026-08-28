@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { FileText, Users, LayoutDashboard, PlusCircle } from 'lucide-react';
+import { FileText, Users, LayoutDashboard, PlusCircle, BarChart3 } from 'lucide-react';
 import './Layout.css';
 
 export default function Layout() {
@@ -10,6 +10,7 @@ export default function Layout() {
     { path: '/', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/invoices/new', label: 'New Invoice', icon: PlusCircle },
     { path: '/clients', label: 'Clients', icon: Users },
+    { path: '/reports', label: 'Reports', icon: BarChart3 },
   ];
 
   return (
