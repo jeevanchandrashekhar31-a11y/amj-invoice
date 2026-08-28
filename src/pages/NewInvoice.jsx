@@ -109,6 +109,7 @@ export default function NewInvoice() {
         items,
         totals,
         taxType,
+        applyTcs,
         createdAt: new Date().toISOString()
       };
       const dataUri = generatePDF(invoiceData, true);
@@ -142,6 +143,7 @@ export default function NewInvoice() {
         items,
         totals,
         taxType,
+        applyTcs,
         createdAt: new Date().toISOString()
       };
 

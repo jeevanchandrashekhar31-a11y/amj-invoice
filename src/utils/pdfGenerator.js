@@ -313,11 +313,11 @@ export default function generatePDF(data, isPreview = false) {
         { content: data.totals.totalTaxableValue.toFixed(0), styles: { halign: 'right' } }
       ],
       isCgst ? [
-        { content: 'CGST\nSGST' + (data.totals.tcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
-        { content: `${data.totals.cgst.toFixed(0)}\n${data.totals.sgst.toFixed(0)}` + (data.totals.tcs ? `\n${data.totals.tcs.toFixed(0)}` : ''), styles: { halign: 'right' } }
+        { content: 'CGST\nSGST' + (data.applyTcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
+        { content: `${data.totals.cgst.toFixed(0)}\n${data.totals.sgst.toFixed(0)}` + (data.applyTcs ? `\n${(data.totals.tcs || 0).toFixed(0)}` : ''), styles: { halign: 'right' } }
       ] : [
-        { content: 'IGST' + (data.totals.tcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
-        { content: (data.totals.igst || data.totals.gst).toFixed(0) + (data.totals.tcs ? `\n${data.totals.tcs.toFixed(0)}` : ''), styles: { halign: 'right' } }
+        { content: 'IGST' + (data.applyTcs ? '\nTCS' : ''), styles: { fontStyle: 'bold', halign: 'center' } },
+        { content: (data.totals.igst || data.totals.gst).toFixed(0) + (data.applyTcs ? `\n${(data.totals.tcs || 0).toFixed(0)}` : ''), styles: { halign: 'right' } }
       ],
       [
         { content: 'Bank Details', colSpan: 2, styles: { fontStyle: 'bold' } },
