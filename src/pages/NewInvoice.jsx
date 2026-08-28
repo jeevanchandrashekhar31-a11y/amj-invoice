@@ -97,7 +97,8 @@ export default function NewInvoice() {
       // 1. Get next invoice number from localStorage
       let nextNum = parseInt(localStorage.getItem('invoiceCounter') || INVOICE_SETTINGS.STARTING_NUMBER);
       
-      const invNumber = generateInvoiceNumber(nextNum);
+      // Use Doc No & Date as the invoice number if provided, else auto-generate
+      const invNumber = dispatch.docNoDate ? dispatch.docNoDate : generateInvoiceNumber(nextNum);
 
       // 2. Build invoice data object
       const invoiceData = {
