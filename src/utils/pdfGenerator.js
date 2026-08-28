@@ -185,7 +185,7 @@ export default function generatePDF(data) {
   const ewayRow = [...emptyRow];
   ewayRow[1] = `E-Way Bill No: ${data.dispatch.ewayBillNo || ''}`;
   const dispatchRow = [...emptyRow];
-  dispatchRow[1] = data.dispatch?.dispatchFrom ? `Dispatch From: ${data.dispatch.dispatchFrom}` : '';
+  dispatchRow[1] = `Dispatch From: ${data.dispatch?.dispatchFrom || ''}`;
   
   itemRows.push(ewayRow);
   itemRows.push(dispatchRow);
