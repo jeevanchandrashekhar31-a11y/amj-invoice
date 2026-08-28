@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { BANK_DETAILS, TERMS_AND_CONDITIONS } from '../config/constants';
+import { BANK_DETAILS, TERMS_AND_CONDITIONS, LOGO_BASE64 } from '../config/constants';
 
 // Helper to convert number to words (Indian Numbering System)
 const numberToWords = (num) => {
@@ -30,13 +30,10 @@ export default function generatePDF(data) {
   const pageWidth = doc.internal.pageSize.getWidth();
   
   // -- 1. HEADER --
-  // Logo placeholder
-  doc.setFillColor(0, 32, 96); // Dark blue
-  doc.ellipse(80, 55, 45, 25, 'F');
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(22);
-  doc.setFont("helvetica", "bold");
-  doc.text("AMJ", 57, 62);
+  // Logo
+  if (LOGO_BASE64) {
+    doc.addImage(LOGO_BASE64, 'PNG', 40, 30, 95, 50);
+  }
   
   // Company Title & Address
   doc.setTextColor(0, 32, 96);
