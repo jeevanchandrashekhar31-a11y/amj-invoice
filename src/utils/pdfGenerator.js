@@ -1,5 +1,5 @@
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { BANK_DETAILS, TERMS_AND_CONDITIONS } from '../config/constants';
 
 // Helper to convert number to words (Indian Numbering System)
@@ -69,7 +69,7 @@ export default function generatePDF(data) {
     } catch { return dateStr; }
   };
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: 117,
     theme: 'grid',
     styles: { 
@@ -193,7 +193,7 @@ export default function generatePDF(data) {
   itemRows.push(ewayRow);
   itemRows.push(dispatchRow);
 
-  doc.autoTable({
+  autoTable(doc, {
     startY: finalY,
     theme: 'grid',
     styles: { 
@@ -292,7 +292,7 @@ export default function generatePDF(data) {
 
   // -- 5. FOOTER DETAILS --
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: finalY,
     theme: 'grid',
     styles: { 
