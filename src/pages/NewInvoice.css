@@ -1,0 +1,181 @@
+/* src/pages/NewInvoice.css */
+.new-invoice-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.parties-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.party-box {
+  background-color: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.party-box h3 {
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.same-as-checkbox {
+  font-size: 0.85rem;
+  font-weight: normal;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.dispatch-section .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.items-table th {
+  text-align: left;
+  padding: 10px;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.items-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.btn-icon:hover {
+  background-color: #fef2f2;
+}
+
+.text-danger {
+  color: #ef4444;
+}
+
+.btn-secondary {
+  background-color: white;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.btn-secondary:hover {
+  background-color: #f1f5f9;
+}
+
+.totals-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.totals-box {
+  width: 350px;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.total-row.highlight {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.total-row.grand-total {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  padding-top: 10px;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.total-row.net-receivable {
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: #059669; /* Green for receivable */
+}
+
+.text-muted {
+  color: #64748b;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 15px 0;
+}
+
+.actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.flex-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bold {
+  font-weight: 600;
+}
